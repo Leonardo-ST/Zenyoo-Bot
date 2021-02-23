@@ -1,19 +1,22 @@
-const Discord = require("discord.js")
+const Discord = require('discord.js');
+const config = require('../config.json')
 
-module.exports.run = (client, message, args) => {
- if (!client.lockit) client.lockit = [];
- if (!message.member.hasPermission("MANAGE_CHANNELS")) return message.reply("**Você nao tem permissão para usar este comando!**"); message.channel.createOverwrite(message.guild.id, {
- SEND_MESSAGES: null
- })
- const embed = new Discord.MessageEmbed()
- .setTitle("<a:sim:747486309144068227>-Canal desbloqueado!!!")
- .setDescription(`**${message.author} bloqueio desligado.**`)
- .setFooter("Digite z!lock para bloqueá-lo novamente!")
- .setColor("WHITE")
-message.channel.send(embed);
- };
- 
- exports.help = {
-    name: 'unlock',
-    aliases: ['abrir']
+exports.run = async (client, message, args) => {
+  
+if (!message.member.hasPermission("ADMINISTRATOR")) return message.reply('Você não tem permissão para usar esse comando!')
+        message.channel.overwritePermissions([{ 
+
+            id: message.guild.id, 
+            
+            accept: ['SEND_MESSAGES'], 
+            
+            }]); 
+            
+            let embed = new Discord.MessageEmbed()
+               .setColor('#00FF00')
+               .setTitle('🔓 Canal desbloqueado!')
+               .setFooter(`Comando Solicitado por: ${message.author.username}`)
+
+
+            return message.reply(embed)
 }
